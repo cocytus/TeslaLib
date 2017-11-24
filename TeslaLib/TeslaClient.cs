@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using TeslaLib.Models;
+using System;
 
 namespace TeslaLib
 {
@@ -12,6 +13,7 @@ namespace TeslaLib
         public string TeslaClientID { get; }
         public string TeslaClientSecret { get; }
         public string AccessToken { get; private set; }
+        public LoginToken LoginToken { get; private set; }
         public RestClient Client { get; set; }
 
         public static readonly string BASE_URL = "https://owner-api.teslamotors.com/api/1";
@@ -69,8 +71,17 @@ namespace TeslaLib
         internal void SetToken(LoginToken token)
         {
             var auth = Client.Authenticator as TeslaAuthenticator;
+            LoginToken = token;
             auth.Token = token.AccessToken;
             AccessToken = token.AccessToken;
+        }
+
+        public bool HasValidToken
+        {
+            get
+            {
+                return LoginToken != null && LoginToken.ExpiresAt > DateTime.UtcNow;
+            }
         }
 
         public void ClearLoginTokenCache() => LoginTokenCache.ClearCache();
@@ -81,11 +92,14 @@ namespace TeslaLib
             var response = Client.Get(request);
 
             var json = JObject.Parse(response.Content)["response"];
-            var data = JsonConvert.DeserializeObject<List<TeslaVehicle>>(json.ToString());
+            var vehicles = JsonConvert.DeserializeObject<List<TeslaVehicle>>(json.ToString());
 
-            data.ForEach(x => x.Client = Client);
+            foreach (var vehicle in vehicles)
+            {
+                vehicle.Client = Client;
+            }
 
-            return data;
+            return vehicles;
         }
     }
 }

@@ -24,6 +24,7 @@ namespace TeslaLib.Models
         [JsonProperty(PropertyName = "expires_in")]
         public long ExpiresIn { get; set; }
 
+        [JsonProperty(PropertyName = "expires_at")]
         public DateTime ExpiresAt => CreatedAt.AddSeconds(ExpiresIn);
     }
 }
