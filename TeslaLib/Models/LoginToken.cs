@@ -23,5 +23,7 @@ namespace TeslaLib.Models
         // I couldn't get this to convert using the JsonConverter attribute.
         [JsonProperty(PropertyName = "expires_in")]
         public long ExpiresIn { get; set; }
+
+        public DateTime ExpiresAt => CreatedAt.AddSeconds(ExpiresIn);
     }
 }
