@@ -147,7 +147,10 @@ namespace TeslaLib.Models
                         IsPerformance = int.Parse(value2) > 0;
                         break;
                     case "BT":
-                        BatterySize = int.Parse(value2);
+                        if (value2.StartsWith("X"))
+                            BatterySize = int.Parse(value2.Substring(1));
+                        else
+                            BatterySize = int.Parse(value2);
                         break;
                     case "RF":
                         switch (value2)
@@ -186,7 +189,10 @@ namespace TeslaLib.Models
                         InteriorDecor = Extensions.ToEnum<InteriorDecor>(value2);
                         break;
                     case "TR":
-                        HasThirdRowSeating = int.Parse(value2) > 0;
+                        if (value2.StartsWith("A"))
+                            HasThirdRowSeating = int.Parse(value2.Substring(1)) > 0;
+                        else
+                            HasThirdRowSeating = int.Parse(value2) > 0;
                         break;
                     case "SU":
                         HasAirSuspension = int.Parse(value2) > 0;
