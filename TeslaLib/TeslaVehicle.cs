@@ -63,12 +63,17 @@ namespace TeslaLib
             return data;
         }
 
-        public ChargeStateStatus LoadChargeStateStatus()
+        public IRestResponse LoadChargeStateStatusRaw()
         {
             var request = new RestRequest("vehicles/{id}/data_request/charge_state");
             request.AddParameter("id", Id, ParameterType.UrlSegment);
 
-            var response = Client.Get(request);
+            return Client.Get(request);
+        }
+
+        public ChargeStateStatus LoadChargeStateStatus()
+        {
+            var response = LoadChargeStateStatusRaw();
             return ParseResult<ChargeStateStatus>(response);
         }
 
@@ -99,13 +104,17 @@ namespace TeslaLib
             return ParseResult<GuiSettingsStatus>(response);
         }
 
-        public VehicleStateStatus LoadVehicleStateStatus()
+        public IRestResponse LoadVehicleStateStatusRaw()
         {
             var request = new RestRequest("vehicles/{id}/data_request/vehicle_state");
             request.AddParameter("id", Id, ParameterType.UrlSegment);
 
-            var response = Client.Get(request);
-            return ParseResult<VehicleStateStatus>(response);
+            return Client.Get(request);
+        }
+
+        public VehicleStateStatus LoadVehicleStateStatus()
+        {
+            return ParseResult<VehicleStateStatus>(LoadVehicleStateStatusRaw());
         }
 
         #endregion
