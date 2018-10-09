@@ -16,8 +16,10 @@ namespace TeslaLib
         public LoginToken LoginToken { get; private set; }
         public RestClient Client { get; set; }
 
-        public static readonly string BASE_URL = "https://owner-api.teslamotors.com/api/1";
-        public static readonly string VERSION = "1.1.0";
+        public const string BaseUrl = "https://owner-api.teslamotors.com/api/1";
+        public const string Version = "1.1.0";
+        public const string UserAgent = "Mozilla/5.0 (Linux; Android 9.0.0; VS985 4G Build/LRX21Y; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/58.0.3029.83 Mobile Safari/537.36";
+        public const string TeslaUserAgent = "TeslaApp/3.4.4-350/fad4a582e/android/9.0.0";
 
         public TeslaClient(string email, string teslaClientId, string teslaClientSecret)
         {
@@ -25,7 +27,7 @@ namespace TeslaLib
             TeslaClientID = teslaClientId;
             TeslaClientSecret = teslaClientSecret;
 
-            Client = new RestClient(BASE_URL);
+            Client = new RestClient(BaseUrl);
             Client.Authenticator = new TeslaAuthenticator();
         }
 
