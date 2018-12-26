@@ -13,6 +13,7 @@ namespace TeslaLib
         public string TeslaClientID { get; }
         public string TeslaClientSecret { get; }
         public string AccessToken { get; private set; }
+        public bool Disabled { get; set; }
         public LoginToken LoginToken { get; private set; }
         public RestClient Client { get; set; }
 
@@ -33,6 +34,11 @@ namespace TeslaLib
 
         public void LoginUsingCache(string password)
         {
+            if (Disabled)
+            {
+                throw new InvalidOperationException("Tesla disabled");
+            }
+
             var token = LoginTokenCache.GetToken(Email);
             if (token != null)
             {
