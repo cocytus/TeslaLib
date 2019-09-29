@@ -304,7 +304,7 @@ namespace TeslaLib
         {
             var request = new RestRequest("vehicles/{id}/command/trunk_open");
             request.AddParameter("id", Id, ParameterType.UrlSegment);
-            request.AddBody(new
+            request.AddJsonBody(new
             {
                 which_trunk = trunkType
             });
@@ -321,7 +321,7 @@ namespace TeslaLib
         {
             var request = new RestRequest("vehicles/{id}/command/set_valet_mode");
             request.AddParameter("id", Id, ParameterType.UrlSegment);
-            request.AddBody(new
+            request.AddJsonBody(new
             {
                 on = enabled,
                 password
