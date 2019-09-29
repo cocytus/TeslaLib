@@ -28,8 +28,10 @@ namespace TeslaLib
             TeslaClientID = teslaClientId;
             TeslaClientSecret = teslaClientSecret;
 
-            Client = new RestClient(BaseUrl);
-            Client.Authenticator = new TeslaAuthenticator();
+            Client = new RestClient(BaseUrl)
+            {
+                Authenticator = new TeslaAuthenticator()
+            };
         }
 
         public void LoginUsingCache(string password)
@@ -62,7 +64,7 @@ namespace TeslaLib
                 RequestFormat = DataFormat.Json
             };
 
-            request.AddBody(new
+            request.AddJsonBody(new
             {
                 grant_type = "password",
                 client_id = TeslaClientID,
