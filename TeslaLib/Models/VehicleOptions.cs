@@ -77,162 +77,169 @@ namespace TeslaLib.Models
 
             foreach (string option in options)
             {
-                switch (option)
+                try
                 {
-                    case "X001":
-                        HasPowerLiftgate = true;
-                        break;
-                    case "X002":
-                        HasPowerLiftgate = false;
-                        break;
-                    case "X003":
-                        HasNavigation = true;
-                        break;
-                    case "X004":
-                        HasNavigation = false;
-                        break;
-                    case "X007":
-                        HasPremiumExteriorLighting = true;
-                        break;
-                    case "X008":
-                        HasPremiumExteriorLighting = false;
-                        break;
-                    case "X011":
-                        HasHomeLink = true;
-                        break;
-                    case "X012":
-                        HasHomeLink = false;
-                        break;
-                    case "X013":
-                        HasSatelliteRadio = true;
-                        break;
-                    case "X014":
-                        HasSatelliteRadio = false;
-                        break;
-                    case "X019":
-                        HasPerformanceExterior = true;
-                        break;
-                    case "X020":
-                        HasPerformanceExterior = false;
-                        break;
-                    case "X024":
-                        HasPerformancePowertrain = true;
-                        break;
-                    case "X025":
-                        HasPerformancePowertrain = false;
-                        break;
-                    case "MDLX":
-                        Model = Model.X;
-                        break;
+                    switch (option)
+                    {
+                        case "X001":
+                            HasPowerLiftgate = true;
+                            break;
+                        case "X002":
+                            HasPowerLiftgate = false;
+                            break;
+                        case "X003":
+                            HasNavigation = true;
+                            break;
+                        case "X004":
+                            HasNavigation = false;
+                            break;
+                        case "X007":
+                            HasPremiumExteriorLighting = true;
+                            break;
+                        case "X008":
+                            HasPremiumExteriorLighting = false;
+                            break;
+                        case "X011":
+                            HasHomeLink = true;
+                            break;
+                        case "X012":
+                            HasHomeLink = false;
+                            break;
+                        case "X013":
+                            HasSatelliteRadio = true;
+                            break;
+                        case "X014":
+                            HasSatelliteRadio = false;
+                            break;
+                        case "X019":
+                            HasPerformanceExterior = true;
+                            break;
+                        case "X020":
+                            HasPerformanceExterior = false;
+                            break;
+                        case "X024":
+                            HasPerformancePowertrain = true;
+                            break;
+                        case "X025":
+                            HasPerformancePowertrain = false;
+                            break;
+                        case "MDLX":
+                            Model = Model.X;
+                            break;
+                    }
+
+                    string value2 = option.Substring(2, 2);
+
+                    switch (option.Substring(0, 2))
+                    {
+                        case "MS":
+                            YearModel = int.Parse(value2);
+                            Model = Model.S;
+                            break;
+                        case "RE":
+                            Region = Extensions.ToEnum<Region>(value2);
+                            break;
+                        case "TM":
+                            TrimLevel = Extensions.ToEnum<TrimLevel>(value2);
+                            break;
+                        case "DR":
+                            DriverSide = Extensions.ToEnum<DriverSide>(value2);
+                            break;
+                        case "PF":
+                            IsPerformance = int.Parse(value2) > 0;
+                            break;
+                        case "BT":
+                            if (value2.StartsWith("X"))
+                                BatterySize = int.Parse(value2.Substring(1));
+                            else
+                                BatterySize = int.Parse(value2);
+                            break;
+                        case "RF":
+                            switch (value2)
+                            {
+                                case "BC":
+                                    RoofType = RoofType.COLORED;
+                                    break;
+                                case "PO":
+                                    RoofType = RoofType.NONE;
+                                    break;
+                                case "BK":
+                                    RoofType = RoofType.BLACK;
+                                    break;
+                            }
+
+                            break;
+                        case "WT":
+                            switch (value2)
+                            {
+                                case "19":
+                                    WheelType = WheelType.BASE_19;
+                                    break;
+                                case "21":
+                                    WheelType = WheelType.SILVER_21;
+                                    break;
+                                case "SP":
+                                    WheelType = WheelType.CHARCOAL_21;
+                                    break;
+                                case "SG":
+                                    WheelType = WheelType.CHARCOAL_PERFORMANCE_21;
+                                    break;
+                            }
+
+                            break;
+                        case "ID":
+                            InteriorDecor = Extensions.ToEnum<InteriorDecor>(value2);
+                            break;
+                        case "TR":
+                            if (value2.StartsWith("A"))
+                                HasThirdRowSeating = int.Parse(value2.Substring(1)) > 0;
+                            else
+                                HasThirdRowSeating = int.Parse(value2) > 0;
+                            break;
+                        case "SU":
+                            HasAirSuspension = int.Parse(value2) > 0;
+                            break;
+                        case "SC":
+                            HasSuperCharging = int.Parse(value2) > 0;
+                            break;
+                        case "TP":
+                            HasTechPackage = int.Parse(value2) > 0;
+                            break;
+                        case "AU":
+                            HasAudioUpgrade = int.Parse(value2) > 0;
+                            break;
+                        case "CH":
+                            HasTwinChargers = int.Parse(value2) > 0;
+                            break;
+                        case "HP":
+                            HasHPWC = int.Parse(value2) > 0;
+                            break;
+                        case "PA":
+                            HasPaintArmor = int.Parse(value2) > 0;
+                            break;
+                        case "PS":
+                            HasParcelShelf = int.Parse(value2) > 0;
+                            break;
+                        case "AD":
+                            break;
+                        case "PX":
+                            IsPerformancePlus = int.Parse(value2) > 0;
+                            break;
+                    }
+
+                    string value3 = option.Substring(1, 3);
+                    switch (option.Substring(0, 1))
+                    {
+                        case "P":
+                            Color = Extensions.ToEnum<TeslaColor>(value3);
+                            break;
+                        case "I":
+                            break;
+                    }
                 }
-
-                string value2 = option.Substring(2, 2);
-
-                switch (option.Substring(0, 2))
+                catch
                 {
-                    case "MS":
-                        YearModel = int.Parse(value2);
-                        Model = Model.S;
-                        break;
-                    case "RE":
-                        Region = Extensions.ToEnum<Region>(value2);
-                        break;
-                    case "TM":
-                        TrimLevel = Extensions.ToEnum<TrimLevel>(value2);
-                        break;
-                    case "DR":
-                        DriverSide = Extensions.ToEnum<DriverSide>(value2);
-                        break;
-                    case "PF":
-                        IsPerformance = int.Parse(value2) > 0;
-                        break;
-                    case "BT":
-                        if (value2.StartsWith("X"))
-                            BatterySize = int.Parse(value2.Substring(1));
-                        else
-                            BatterySize = int.Parse(value2);
-                        break;
-                    case "RF":
-                        switch (value2)
-                        {
-                            case "BC":
-                                RoofType = RoofType.COLORED;
-                                break;
-                            case "PO":
-                                RoofType = RoofType.NONE;
-                                break;
-                            case "BK":
-                                RoofType = RoofType.BLACK;
-                                break;
-                        }
-
-                        break;
-                    case "WT":
-                        switch (value2)
-                        {
-                            case "19":
-                                WheelType = WheelType.BASE_19;
-                                break;
-                            case "21":
-                                WheelType = WheelType.SILVER_21;
-                                break;
-                            case "SP":
-                                WheelType = WheelType.CHARCOAL_21;
-                                break;
-                            case "SG":
-                                WheelType = WheelType.CHARCOAL_PERFORMANCE_21;
-                                break;
-                        }
-
-                        break;
-                    case "ID":
-                        InteriorDecor = Extensions.ToEnum<InteriorDecor>(value2);
-                        break;
-                    case "TR":
-                        if (value2.StartsWith("A"))
-                            HasThirdRowSeating = int.Parse(value2.Substring(1)) > 0;
-                        else
-                            HasThirdRowSeating = int.Parse(value2) > 0;
-                        break;
-                    case "SU":
-                        HasAirSuspension = int.Parse(value2) > 0;
-                        break;
-                    case "SC":
-                        HasSuperCharging = int.Parse(value2) > 0;
-                        break;
-                    case "TP":
-                        HasTechPackage = int.Parse(value2) > 0;
-                        break;
-                    case "AU":
-                        HasAudioUpgrade = int.Parse(value2) > 0;
-                        break;
-                    case "CH":
-                        HasTwinChargers = int.Parse(value2) > 0;
-                        break;
-                    case "HP":
-                        HasHPWC = int.Parse(value2) > 0;
-                        break;
-                    case "PA":
-                        HasPaintArmor = int.Parse(value2) > 0;
-                        break;
-                    case "PS":
-                        HasParcelShelf = int.Parse(value2) > 0;
-                        break;
-                    case "AD":
-                        break;
-                    case "PX":
-                        IsPerformancePlus = int.Parse(value2) > 0;
-                        break;
-                }
-
-                string value3 = option.Substring(1, 3);
-                switch (option.Substring(0, 1))
-                {
-                    case "P":
-                        Color = Extensions.ToEnum<TeslaColor>(value3);
-                        break;
-                    case "I":
-                        break;
+                    Console.WriteLine("Failed to parse option: " + option);
                 }
             }
         }
